@@ -1,15 +1,17 @@
 export default {
     state: {
-        uid: "",
-        displayName: "",
-        photoURL: "",
-        date: "",
-        regDate: "",
-        count: 0,
+        user: {},
+        isAuth: false,
     },
     mutations: {
-        increment(state) {
-            state.count++
+        inAuth(state, user_) {
+            if (user_) {
+                state.isAuth = true;
+                state.user = user_;
+            } else {
+                state.isAuth = false;
+                state.user = undefined;
+            }
         }
     }
 }

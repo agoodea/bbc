@@ -1,0 +1,60 @@
+<section class="eslide">
+
+
+    <f7-navbar sliding color-theme="blue">
+        <f7-nav-left>
+            <f7-link class="close-popup" @click="clearSlide">
+                <f7-icon f7="close_round" size="35px" color="#c0392b"></f7-icon>
+            </f7-link>
+        </f7-nav-left>
+        <f7-nav-center v-if="isNewSlide">New slide </f7-nav-center>
+        <f7-nav-center v-else>Edit slide</f7-nav-center>
+        <f7-nav-right>
+            <f7-link class="close-popup">
+                <f7-icon f7="check_round" size="35px" color="#c0392b"></f7-icon>
+            </f7-link>
+        </f7-nav-right>
+    </f7-navbar>
+
+    <!-- <div form class="slide_title">
+        <input type="text" placeholder="Title" v-model="slide.title" />
+    </div>
+    <img :src="img" class="lazy slide-img" id="myImage" style="display: none">
+    <div class="control-buttons">
+        <f7-list>
+            <f7-list-item>
+                <f7-button :color="getColorImg" v-on:click="getCamera()">
+                    <f7-icon material="camera" size="35px"></f7-icon>
+                </f7-button>
+                <f7-button :color="getColorImg" v-on:click="openFilePicker()">
+                    <f7-icon material="photo_library" size="35px"></f7-icon>
+                </f7-button>
+                <f7-button :color="getColorRecord" data-picker=".picker-1" class="open-picker" @click="newRecord()">
+                    <f7-icon material="mic" size="35px"></f7-icon>
+                </f7-button>
+            </f7-list-item>
+        </f7-list>
+    </div>
+    <div class="picker-modal picker-1">
+        <div class="toolbar">
+            <div class="toolbar-inner" style="color: white; padding: 0 20px;">
+                <div class="left">New Record</div>
+                <div class="right"><a href="#" class="close-picker" style="color: white">Done</a></div>
+            </div>
+        </div>
+        <div class="picker-modal-inner">
+            <audio id="player" v-bind:src="recordSrc"></audio>
+            <radial-progress-bar :diameter="200" :completed-steps="resValue" :total-steps="totalSteps">
+                <f7-button :color="getColorRecord" @click="getRecord()" v-bind:disabled="recNow">
+                    <f7-icon material="mic" size="35px"></f7-icon>
+                </f7-button>
+                <h3>{{ timer.toFixed(1) }}</h3>
+                <f7-button :color="getColorRecord" @click="playRecord()" v-if="!isRecord" v-bind:disabled="recNow">
+                    <f7-icon material="play_arrow" size="35px"></f7-icon>
+                </f7-button>
+
+            </radial-progress-bar>
+        </div>
+    </div> -->
+
+</section>

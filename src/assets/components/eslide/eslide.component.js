@@ -1,12 +1,12 @@
 export default {
-    name: 'navbar',
+    name: 'eslide',
     props: [],
     mounted() {
 
     },
     data() {
         return {
-            ddd: "sdfsdf",
+
         }
     },
     methods: {
@@ -15,9 +15,6 @@ export default {
     computed: {
         isAu() {
             return this.$store.state.userModule.isAuth;
-        },
-        currentUser() {
-            return this.$store.state.userModule.user;
         },
     }
 }

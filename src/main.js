@@ -103,13 +103,13 @@ mixins.manageFirebase = {
         if (!window.localStorage.user) this.cleanLocalStorageAfterLogut()
             // Monitor user changes
         firebase.auth().onAuthStateChanged(user => {
-            debugger
             this.user = user ? {
                 uid: user.uid,
                 email: user.email,
                 name: user.displayName,
                 photo: user.photoURL
-            } : null
+            } : undefined;
+            this.$store.commit('inAuth', this.user);
         })
 
         // Use database service

@@ -1,71 +1,4 @@
-let text = {
-    en: {
-        titleSignIn: 'Sign in',
-        titleSignOut: 'Sign out',
-        currentlyDisabled: 'The sign in is currently disabled.',
-        email: 'Email',
-        password: 'Password',
-        passwordConfirmation: 'Confirmation',
-        handleRegistration: 'Create account',
-        handleReset: 'Reset password',
-        signIn: 'Sign in',
-        signOut: 'Sign out',
-        createAccount: 'Create new account',
-        resetPassword: 'Reset your password',
-        cancel: 'Back',
-        emailSent: 'Email sent',
-        checkYourInbox: 'Please check your inbox.',
-        signOutDone: 'Sign out done',
-        accountCreated: 'Account created',
-        error: 'Error!!',
-        errorOffline: 'This action is offline not possible.',
-        errorNoEmail: 'Please enter your email address.',
-        errorNoPassword: 'Please enter a password.',
-        errorPasswordsDifferent: 'You entered two different passwords.',
-        firebaseErrors: {
-            'auth/email-already-in-use': 'The email address is already linked to another account.',
-            'auth/invalid-email': 'The email address is invalid.',
-            'auth/operation-not-allowed': 'Login is currently disabled.',
-            'auth/weak-password': 'The password is not safe enough.',
-            'auth/user-not-found': 'No account found for that email address.',
-            'auth/user-disabled': 'Your account is deactivated.',
-            'auth/wrong-password': 'The password is wrong.'
-        }
-    },
-    de: {
-        titleSignIn: 'Anmelden',
-        titleSignOut: 'Abmelden',
-        currentlyDisabled: 'Die Anmeldung ist zurzeit deaktiviert.',
-        email: 'E-Mail',
-        password: 'Passwort',
-        passwordConfirmation: 'Bestätigung',
-        handleRegistration: 'Konto erstellen',
-        handleReset: 'Passwort zurücksetzen',
-        signIn: 'Anmelden',
-        signOut: 'Abmelden',
-        createAccount: 'Neues Konto erstellen',
-        resetPassword: 'Passwort zurücksetzen',
-        cancel: 'Abbrechen',
-        emailSent: 'E-Mail verschickt',
-        checkYourInbox: 'Bitte schau in deinem Posteingang.',
-        signOutDone: 'Abmeldung erfolgreich',
-        accountCreated: 'Konto erstellt',
-        error: 'Fehler',
-        errorOffline: 'Diese Aktion ist offline nicht möglich.',
-        errorNoEmail: 'Bitte gib Deine E-Mail-Adresse ein.',
-        errorNoPassword: 'Bitte gib ein Passwort ein.',
-        errorPasswordsDifferent: 'Du hast zwei unterschiedliche Passwörter eingegeben.',
-        firebaseErrors: {
-            'auth/email-already-in-use': 'Die E-Mail-Adresse wird bereits verwendet.',
-            'auth/invalid-email': 'Die E-Mail-Adresse ist fehlerhaft.',
-            'auth/operation-not-allowed': 'Anmelden ist zurzeit nicht möglich.',
-            'auth/weak-password': 'Dein Passwort ist nicht sicher genug.',
-            'auth/user-not-found': 'Kein Konto mit dieser E-Mail-Adresse gefunden.',
-            'auth/user-disabled': 'Dein Konto ist deaktiviert.',
-            'auth/wrong-password': 'Das Passwort ist falsch.'
-        }
-    }
-}
+import text from "../../js/localization";
 
 export default {
     components: {
@@ -81,14 +14,12 @@ export default {
             email: '',
             password: '',
             passwordConfirmation: '',
-            mode: '',
             text: {},
             editProfileMode: false,
         }
     },
     created() {
         this.text = text['en'] || text['en']
-        this.mode = this.$root.user ? 'signOut' : 'signIn';
     },
     methods: {
         cancel: function() {
@@ -250,37 +181,12 @@ export default {
                     })
             }
         },
-        sign: function() {
-            if (!this.isAuth) {
-                authService.signIn(this.user)
-                    .then((user) => {
-                        alert(JSON.stringify(user));
-
-                    })
-                    .catch((err) => {
-                        alert(err.code);
-                        alert(err.message);
-                        authService.createUser(this.user)
-                            .then((user) => {
-                                alert(JSON.stringify(user));
-
-                            })
-                            .catch((err) => {
-                                alert(err.code);
-                                alert(err.message);
-                            });
-                    });
-
-
-            }
-
-        },
 
     },
     computed: {
-        //   mode() {
-        //     return this.$root.user ? 'signOut' : 'signIn'
-        // }
+        mode() {
+            return this.$store.state.userModule.isAuth ? 'signOut' : 'signIn'
+        }
 
     }
 }

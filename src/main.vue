@@ -1,88 +1,35 @@
 <template>
 	<!-- App -->
 	<div id="app">
-		
+
 		<!-- Statusbar -->
 		<f7-statusbar></f7-statusbar>
-		
-		<!-- Left Panel -->
-		<f7-panel left reveal layout="dark">
-			<f7-view id="left-panel-view" navbar-through :dynamic-navbar="true">
-				<f7-navbar title="Left Panel"></f7-navbar>
-				<f7-pages>
-					<f7-page>
-						<f7-block inner>
-							<p>Left panel content goes here</p>
-						</f7-block>
-						<f7-block-title>Load page in panel</f7-block-title>
-						<f7-list>
-							<f7-list-item link="/about/" title="About"></f7-list-item>
-							<f7-list-item link="/form/" title="Form"></f7-list-item>
-						</f7-list>
-						<f7-block-title>Load page in main view</f7-block-title>
-						<f7-list>
-							<f7-list-item link="/about/" title="About" link-view="#main-view" link-close-panel></f7-list-item>
-							<f7-list-item link="/form/" title="Form" link-view="#main-view" link-close-panel></f7-list-item>
-						</f7-list>
-					</f7-page>
-				</f7-pages>
-			</f7-view>
-		</f7-panel>
-		
-		<!-- Right Panel -->
-		<f7-panel right cover layout="dark">
-			<f7-view id="right-panel-view" navbar-through :dynamic-navbar="true">
-				<f7-navbar title="Right Panel" sliding></f7-navbar>
-				<f7-pages>
-					<f7-page>
-						<f7-block>
-							<p>Right panel content goes here</p>
-						</f7-block>
-						<f7-block-title>Load page in panel</f7-block-title>
-						<f7-list>
-							<f7-list-item link="/about/" title="About"></f7-list-item>
-							<f7-list-item link="/form/" title="Form"></f7-list-item>
-						</f7-list>
-						<f7-block-title>Load page in main view</f7-block-title>
-						<f7-list>
-							<f7-list-item link="/about/" title="About" link-view="#main-view" link-close-panel></f7-list-item>
-							<f7-list-item link="/form/" title="Form" link-view="#main-view" link-close-panel></f7-list-item>
-						</f7-list>
-					</f7-page>
-				</f7-pages>
-			</f7-view>
-		</f7-panel>
-		
+
 		<!-- Main Views -->
-		<f7-views>
-			<f7-view id="main-view" navbar-through :dynamic-navbar="true" main>
+		<f7-views tabs toolbar-fixed :dynamic-navbar="true">
+			<f7-view id="main-view" main active class="tab">
 				<!-- Navbar -->
-				<nav-bar></nav-bar>	
+				<!-- <nav-bar></nav-bar> -->
 				<!-- Pages -->
 				<f7-pages>
-					<f7-page>
-						<f7-block-title>Welcome to my App</f7-block-title>
-						<f7-block inner>
-							<p>Duis sed erat ac eros ultrices pharetra id ut tellus. Praesent rhoncus enim ornare ipsum aliquet ultricies. Pellentesque sodales erat quis elementum sagittis.</p>
-						</f7-block>
-						<f7-block-title>Navigation</f7-block-title>
-						<f7-list>
-							<f7-list-item link="/about/" title="About"></f7-list-item>
-							<f7-list-item link="/form/" title="Form"></f7-list-item>
-							<f7-list-item link="/dynamic-route/blog/45/post/125/?foo=bar#about" title="Dynamic Route"></f7-list-item>
-						</f7-list>
-						<f7-block-title>Side Panels</f7-block-title>
-						<f7-block>
-							<f7-grid>
-								<f7-col width="50">
-									<f7-button open-panel="left">Left Panel</f7-button>
-								</f7-col>
-								<f7-col width="50">
-									<f7-button open-panel="right">Right Panel</f7-button>
-								</f7-col>
-							</f7-grid>
-						</f7-block>
-						<f7-block-title>Modals</f7-block-title>
+					<f7-page></f7-page>
+						<!-- <f7-list>
+									<f7-list-item link="/about/" title="About"></f7-list-item>
+									<f7-list-item link="/form/" title="Form"></f7-list-item>
+									<f7-list-item link="/dynamic-route/blog/45/post/125/?foo=bar#about" title="Dynamic Route"></f7-list-item>
+								</f7-list> -->
+						<!-- <f7-block-title>Side Panels</f7-block-title>
+								<f7-block>
+									<f7-grid>
+										<f7-col width="50">
+											<f7-button open-panel="left">Left Panel</f7-button>
+										</f7-col>
+										<f7-col width="50">
+											<f7-button open-panel="right">Right Panel</f7-button>
+										</f7-col>
+									</f7-grid>
+								</f7-block> -->
+						<!-- <f7-block-title>Modals</f7-block-title>
 						<f7-block>
 							<f7-grid>
 								<f7-col width="50">
@@ -92,64 +39,85 @@
 									<f7-button open-login-screen="#login-screen">Login Screen</f7-button>
 								</f7-col>
 								<f7-col width="50">
-									<f7-button @click = "inc">Increment {{increment}} {{increment1}}</f7-button>
+									<f7-button> {{isAu}} {{currentUser}}</f7-button>
 								</f7-col>
 							</f7-grid>
-						</f7-block>
+						</f7-block> -->
 					</f7-page>
 				</f7-pages>
+
 			</f7-view>
-		</f7-views>
-		
-		<!-- Popup -->
-		<f7-popup id="popup">
-			<f7-view navbar-fixed>
+			<f7-view id="tab2" class="tab">
+				<nav-bar v-bind:is-au="isAu" fixed></nav-bar>
 				<f7-pages>
-					<f7-page>
-						<f7-navbar title="Popup">
-							<f7-nav-right>
-								<f7-link :close-popup="true">Close</f7-link>
-							</f7-nav-right>
-						</f7-navbar>
-						<f7-block>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, architecto. Cupiditate laudantium rem nesciunt numquam, ipsam. Voluptates omnis, a inventore atque ratione aliquam. Omnis iusto nemo quos ullam obcaecati, quod.</f7-block>
+					<f7-page v-if="isAu">
+						<!-- <f7-button big red @click="saveAlbum">save album</f7-button> -->
+					</f7-page>
+				</f7-pages>
+
+			</f7-view>
+			<f7-view id="tab3" class="tab">
+				<!-- <nav-bar v-bind:is-au="isAu" fixed></nav-bar> -->
+
+				<f7-pages>
+					<f7-page v-if="isAu" class="album-container" hide-tabbar-on-scroll>
+						<!-- <album-form v-on:newalbum="newAlbum" :album="editalbum" :isNewAlbum="isNewAlbum"></album-form> -->
+					</f7-page>
+				</f7-pages>
+
+			</f7-view>
+			<f7-view id="tab4" class="tab">
+				<!-- <nav-bar v-bind:is-au="isAu" fixed></nav-bar> -->
+				<f7-pages>
+					<f7-page v-if="isAu" class="album-container">
+						<!-- <slider :editalbum="editalbum"></slider> -->
+						this is record view
 					</f7-page>
 				</f7-pages>
 			</f7-view>
-		</f7-popup>
-		
+			<action-button></action-button>
+			<botton-tabs></botton-tabs>
+
+		</f7-views>
+
+		<!-- Popup -->
+		<div class="popup popup-newslide">
+			<!-- <div class="content-block"> -->
+				<eslide></eslide>
+			<!-- </div> -->
+		</div>
+
 		<!-- Login Screen -->
 		<user-screen></user-screen>
-	
+
 	</div>
 </template>
 
 <script>
-	import UserScreen from "./assets/components/user";
-	import NavBar from "./assets/components/navbar";
+import UserScreen from "./assets/components/user";
+import NavBar from "./assets/components/navbar";
+import BottomNavBar from "./assets/components/bottomNavBar";
+import ActionButton from "./assets/components/actionButton";
 
-	export default {
-		components: {
-			'user-screen': UserScreen,
-			'nav-bar': NavBar,
-		},
-		methods: {
-			inc() {
-				// this.$store.state.userModule.commit('increment');
-				this.$store.commit('increment')
-			},
-			incc() {
-				this.$store.commit('increment')
-			}
+import Eslide from "./assets/components/eslide";
 
+export default {
+	components: {
+		'user-screen': UserScreen,
+		'nav-bar': NavBar,
+		'botton-tabs': BottomNavBar,
+		'action-button': ActionButton,
+		'eslide': Eslide,
+	},
+	methods: {
+	},
+	computed: {
+		isAu() {
+			return this.$store.state.userModule.isAuth;
 		},
-		computed: {
-			increment() {
-				return this.$store.state.userModule.count;
-			},
-			increment1() {
-				debugger
-				return this.$store.state.tempModule.count;
-			},
-		}
+		currentUser() {
+			return this.$store.state.userModule.user;
+		},
 	}
+}
 </script>

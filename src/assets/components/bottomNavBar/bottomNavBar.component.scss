@@ -1,0 +1,24 @@
+.bottom-nav-bar {
+    background: white;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    // box-shadow: 0 1px 3px 2px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+    color: grey;
+    height: 56px;
+}
+
+.bottom-nav-bar {
+    a {
+        i {
+            color: grey;
+            font-weight: bold;
+        }
+    }
+    a.active {
+        background: none;
+        i {
+            color: black;
+        }
+    }
+}
