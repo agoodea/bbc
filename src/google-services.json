@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "443249798545",
+    "firebase_url": "https://who-is-who-80223.firebaseio.com",
+    "project_id": "who-is-who-80223",
+    "storage_bucket": "who-is-who-80223.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443249798545:android:42671b5b6f2c0d06",
+        "android_client_info": {
+          "package_name": "com.gdWow.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443249798545-o9cun7v2otan1f26t7ari6gal43aoifr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuRJV973BbkUOCO8Q7_OygsX1B4lrqRh4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

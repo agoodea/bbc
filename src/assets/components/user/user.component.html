@@ -1,0 +1,168 @@
+<section class="user">
+    <template>
+    <f7-login-screen id="login-screen">
+      <f7-view navbar-through :dynamic-navbar="true">
+        <f7-navbar title="Account" sliding theme="deeporange">
+          <f7-nav-right>
+            <f7-link class="close-login-screen">
+  
+              <f7-icon f7="close_round" size="35px" color="#c0392b"></f7-icon>
+            </f7-link>
+          </f7-nav-right>
+        </f7-navbar>
+        <f7-pages>
+          <!-- <f7-page no-navbar no-toolbar no-swipeback layout="blue"> -->
+          <f7-page layout="blue" v-if="!editProfileMode">
+            <!-- Form for email sign in / registration / password reset -->
+            <f7-list form id="app-framework-login-screen" inset v-if="!$root.user && ((mode === 'signIn') ||  (mode === 'registration'))">
+              <f7-list-item v-if="(mode === 'signIn') || (mode === 'registration')">
+                <f7-label>{{text.email}}</f7-label>
+                <f7-input type="email" :placeholder="text.email" v-model="email" />
+              </f7-list-item>
+              <f7-list-item v-if="(mode === 'signIn') || (mode === 'registration')">
+                <f7-label>{{text.password}}</f7-label>
+                <f7-input type="password" :placeholder="text.password" v-model="password" />
+              </f7-list-item>
+              <f7-list-item v-if="(mode === 'registration')">
+                <f7-label>{{text.password}}</f7-label>
+                <f7-input type="password" :placeholder="text.passwordConfirmation" v-model="passwordConfirmation" />
+              </f7-list-item>
+            </f7-list>
+  
+            <!-- Email sign in buttons -->
+            <f7-block v-if="mode === 'signIn'">
+              <f7-button big raised color="green" fill @click="handleSignIn">{{text.signIn}}</f7-button big>
+            </f7-block>
+  
+            <!-- Email registration buttons -->
+            <f7-block v-if="mode === 'signIn'">
+              <f7-button big raised color="green" @click="mode='registration'">{{text.createAccount}}</f7-button big>
+            </f7-block>
+            <f7-block v-if="mode === 'registration'">
+              <f7-button big raised color="green" fill @click="handleRegistration">{{text.handleRegistration}}</f7-button big>
+            </f7-block>
+  
+            <f7-block v-if="mode === 'signOut'" class="logout">
+              <f7-link @click="handleSignOut">
+                <f7-icon f7="logout" size="35px" color="deeporange"></f7-icon>
+                <!-- <i class="f7-icons" size="44px">logout</i> -->
+              </f7-link>
+            </f7-block>
+            <f7-block v-if="mode === 'signOut'">
+              Options
+              <div class="card">
+                <div class="card-content">
+                  <!-- <a href="#" data-popup=".popup-about" class="open-popup">Open About Popup </a> -->
+                  <div class="list-block">
+                    <f7-list>
+                      <f7-list-item link="#" title="Profile" data-popup=".popup-profile" class="open-popup" media="<i class='icon f7-icons color-deeporange' style='font-size: 35px;'>person</i>">
+                      </f7-list-item>
+                    </f7-list>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-content">
+                  <div class="list-block">
+                    <f7-list>
+                      <a href="#main-view" class="item-link item-content tab-link close-login-screen">
+                        <div class="item-media">
+                          <i class='icon f7-icons color-deeporange' style='font-size: 35px;'>film</i>
+                        </div>
+                        <div class="item-inner">
+                          <div class="item-title">Albums</div>
+                          <div class="item-after">
+                            <span class="badge">4</span>
+                          </div>
+                        </div>
+                      </a>
+  
+                      <a href="#tab2" class="item-link item-content tab-link close-login-screen">
+                        <div class="item-media">
+                          <i class='icon f7-icons color-deeporange' style='font-size: 35px;'>images</i>
+                        </div>
+                        <div class="item-inner">
+                          <div class="item-title">images</div>
+                          <div class="item-after">
+                            <span class="badge">5</span>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="#tab4" class="item-link item-content tab-link close-login-screen">
+                        <div class="item-media">
+                          <i class='icon f7-icons color-deeporange' style='font-size: 35px;'>albums</i>
+                        </div>
+                        <div class="item-inner">
+                          <div class="item-title">Records</div>
+                          <div class="item-after">
+                            <span class="badge">23</span>
+                          </div>
+                        </div>
+                      </a>
+  
+                    </f7-list>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-content">
+                  <div class="list-block">
+                    <f7-list>
+                       <f7-list-item link="#" title="Settings" data-popup=".popup-settings" class="open-popup" media="<i class='icon f7-icons color-deeporange' style='font-size: 35px;'>settings</i>">
+                      </f7-list-item>
+                      <!-- <f7-list-item l title="Settings" media="<i class='icon f7-icons color-deeporange' style='font-size: 35px;'>settings</i>"></f7-list-item> -->
+                      <f7-list-item link="/profile/" title="Help" media="<i class='icon f7-icons color-deeporange' style='font-size: 35px;'>help</i>"></f7-list-item>
+                    </f7-list>
+                  </div>
+                </div>
+              </div>
+  
+            </f7-block>
+  
+          </f7-page>
+          <!-- <f7-page v-else>
+                      Profile
+                      <div class="card">
+                          <div class="card-content">
+                            <div class="list-block">
+                              <f7-list>
+                                <f7-list-item @click="editProfileMode = !editProfileMode" title="Profile" badge="5" badge-color="lightblue"
+                                  media="<i class='icon f7-icons color-deeporange' style='font-size: 35px;'>film</i>"></f7-list-item>
+                              </f7-list>
+                            </div>
+                          </div>
+                        </div>
+                    </f7-page>  -->
+        </f7-pages>
+      </f7-view>
+      <f7-popup tablet-fullscreen class="popup-profile">
+        <!-- Popup content goes here -->
+        <f7-navbar title="Profile" sliding theme="yellow">
+          <f7-nav-right>
+            <f7-link class="close-popup">
+  
+              <f7-icon f7="close_round" size="35px" color="#c0392b"></f7-icon>
+            </f7-link>
+          </f7-nav-right>
+        </f7-navbar>
+        <div class="card">
+          <div class="card-content">
+            <!-- <div class="list-block">
+                <f7-list>
+                  <f7-list-item class="close-popup">
+                    <a href="#" class="close-popup">
+                      <i class='icon f7-icons color-deeporange' style='font-size: 35px;'>close</i>
+                    </a>
+  
+                  </f7-list-item>
+                </f7-list>
+              </div> -->
+          </div>
+        </div>
+      </f7-popup>
+      <f7-popup tablet-fullscreen class="popup-settings">
+        <!-- <settings></settings> -->
+      </f7-popup>
+    </f7-login-screen>
+  </template>
+</section>
