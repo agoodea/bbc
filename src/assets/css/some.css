@@ -107,4 +107,5 @@
 
 .popup-newslide {
     opacity: .7;
+    overflow: none;
 }

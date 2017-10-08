@@ -6,15 +6,40 @@
     opacity: .7;
     z-index: 11002;
     .content-block.main {
-        margin-top: 50%;
+        top: 15%;
+        width: 100%;
+        position: absolute;
         .list-block.main {
+            ul:before {
+                content: "Sdfsdf";
+                display: none;
+            }
             font-size: xx-large;
+        }
+        .content-block-inner:before {
+            display: none;
+        }
+        .content-block-inner:after {
+            display: none;
         }
     }
     .content-block.cancel {
-        margin-top: 20%;
+        bottom: 5%;
+        position: absolute;
+        width: 100%;
         .list-block.cancel {
             font-size: large;
+        }
+        .content-block-inner {
+            ul:after:before {
+                display: none;
+            }
+        }
+        .content-block-inner:before {
+            display: none;
+        }
+        .content-block-inner:after {
+            display: none;
         }
     }
 }
