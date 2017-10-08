@@ -66,7 +66,7 @@
 		<!-- Popup -->
 		<div class="popup popup-newslide">
 			<!-- <div class="content-block"> -->
-			<p-menu v-on:getCamera="getCamera"></p-menu>
+			<p-menu></p-menu>
 			<!-- </div> -->
 		</div>
 

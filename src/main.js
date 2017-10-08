@@ -112,7 +112,7 @@ mixins.manageFirebase = {
                 email: user.email,
                 name: user.displayName,
                 photo: user.photoURL
-            } : undefined;
+            } : null;
             this.$store.commit('inAuth', this.user);
         })
 

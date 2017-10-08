@@ -48,6 +48,7 @@ export default {
     methods: {
         back() {
             this.$store.commit("clearSlide");
+            this.clearCanvas();
             this.$store.commit("setActionState", "main");
             this.$f7.showTab("#main");
             console.log('object');
@@ -60,15 +61,37 @@ export default {
             navigator.camera.getPicture(this.onSuccessImg, captureErrorImg, setOptions(srcType));
         },
         onSuccessImg(imageUri) {
-            // let image = document.getElementById('myImage');
+            // let image1 = document.getElementById('myImage');
             // this.slide.img = this.filename;
 
             let src = "data:image/jpeg;base64," + imageUri;
             // image.src = src;
+            // image1.src = src;
             this.slide.imgData = src;
+
+            let canvas = document.getElementById("slideimg");
+            let context = canvas.getContext("2d");
+            let img = new Image();
+
+            // Привязываем функцию к событию onload
+            // Это указывает браузеру, что делать, когда изображение загружено
+            img.onload = function() {
+
+                let height_ = img.naturalHeight;
+                let width_ = img.naturalWidth;
+                canvas.width = width_;
+                canvas.height = height_;
+                context.drawImage(img, 0, 0);
+            };
+            img.src = src;
             // image.style.display = "block";
             this.$store.commit("editSlide", this.slide);
             // this.saveImage(imageUri);
+        },
+        clearCanvas() {
+            let canvas = document.getElementById("slideimg");
+            let context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
         },
     },
     computed: {

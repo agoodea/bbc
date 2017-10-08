@@ -19,6 +19,13 @@
                 margin: 0 auto;
                 max-width: calc( 100% - 20px);
             }
+            canvas {
+                border-radius: 6px;
+                width: auto;
+                max-height: 300px;
+                margin: 10px;
+                max-width: calc( 100% - 20px);
+            }
         }
     }
     // .eslide-menu {
