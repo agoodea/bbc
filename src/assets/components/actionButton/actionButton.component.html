@@ -1,5 +1,34 @@
 <!-- <div class="action-button"> -->
-<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide">
-    <i class="icon icon-plus"></i>
+<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-if="!isEdit && actionState === 'main'">
+    <i class="f7-icons">add</i>
+</a>
+<a href="#" class="action-button floating-button color-blue" @click="toEditSlide" v-else-if="isEdit && actionState === 'main'">
+    <i class="f7-icons">compose</i>
+</a>
+<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-else-if="!isEdit && actionState === 'gallery'">
+    <i class="f7-icons">add</i>
+    <!-- <i class="icon icon-albums"></i> -->
+</a>
+<a href="#" class="action-button floating-button color-blue" @click="toEditSlide" v-else-if="isEdit && actionState === 'gallery'">
+    <i class="f7-icons">compose</i>
+    <!-- <i class="icon icon-albums"></i> -->
+</a>
+<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-else-if="actionState === 'albums'">
+    <i class="f7-icons">albums</i>
+</a>
+<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-else-if="!isEdit && actionState === 'user'">
+    <i class="f7-icons">add</i>
+</a>
+<a href="#" class="action-button floating-button color-blue" @click="toEditSlide" v-else-if="isEdit && actionState === 'user'">
+    <i class="f7-icons">compose</i>
+</a>
+<a href="#" class="action-button floating-button color-blue" data-popup=".popup-newslide" v-else-if="actionState === 'slide_camera'">
+    <i class="f7-icons">mic</i>
+</a>
+<a href="#" class="action-button floating-button color-blue" data-popup=".popup-newslide" v-else-if="actionState === 'slide_check'">
+    <i class="f7-icons">check</i>
+</a>
+<a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-else>
+    <i class="icon icon-arrow"></i>
 </a>
 <!-- </div> -->

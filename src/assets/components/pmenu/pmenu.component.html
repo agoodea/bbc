@@ -1,0 +1,17 @@
+<section class="pmenu">
+    <div class="content-block main" v-if="actionState === 'main' || actionState === 'gallery'">
+        <div class="content-block-inner">
+            <f7-list class="main">
+                <f7-list-item link="#" title="Camera" v-on:click="getCamera()" class="close-popup"></f7-list-item>
+                <f7-list-item link="#" title="Galery" v-on:click="openFilePicker()" class="close-popup"></f7-list-item>
+            </f7-list>
+        </div>
+    </div>
+    <div class="content-block cancel">
+        <div class="content-block-inner">
+            <f7-list class="cancel">
+                <f7-list-item link="#" class="close-popup" title="Cancel"></f7-list-item>
+            </f7-list>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,20 @@
+.pmenu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #cce1ea;
+    opacity: .7;
+    z-index: 11002;
+    .content-block.main {
+        margin-top: 50%;
+        .list-block.main {
+            font-size: xx-large;
+        }
+    }
+    .content-block.cancel {
+        margin-top: 20%;
+        .list-block.cancel {
+            font-size: large;
+        }
+    }
+}

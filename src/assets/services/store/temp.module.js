@@ -1,10 +1,15 @@
 export default {
     state: {
-        count1: 0
+        paths: {
+            imgPath: "",
+            recordPath: "",
+            slidePath: "",
+            albumsPath: "",
+        },
     },
     mutations: {
-        // increment(state) {
-        //     state.count1++
-        // }
+        setPath(state, path_) {
+            state.path = path_;
+        }
     }
 }

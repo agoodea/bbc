@@ -1,21 +1,26 @@
 <section class="eslide">
+    <div class="eslide-block">
+        <f7-navbar sliding color-theme="white" style="background: white;">
+            <f7-nav-left>
+                <f7-link class="close-popup" @click="back" style="color: black;">
+                    <i class="f7-icons">left</i>
+                    <!-- <f7-icon f7="chevron_left" size="35px" color="#c0392b"></f7-icon> -->
+                </f7-link>
+            </f7-nav-left>
+            <f7-nav-center style="color: black; margin: 0 auto"> New slide </f7-nav-center>
+            <f7-nav-right></f7-nav-right>
+            <!-- <f7-nav-right>
+                <f7-link class="close-popup">
+                    <f7-icon f7="check_round" size="35px" color="#c0392b"></f7-icon>
+                </f7-link>
+            </f7-nav-right> -->
+        </f7-navbar>
+        <div class="header"><input type="text" placeholder="Slide name" class=""></div>
+        <div class="content">
+            <img :src="slide.imgData" class="lazy slide-img" id="myImage" style="display: block">
+        </div>
 
-
-    <f7-navbar sliding color-theme="blue">
-        <f7-nav-left>
-            <f7-link class="close-popup" @click="clearSlide">
-                <f7-icon f7="close_round" size="35px" color="#c0392b"></f7-icon>
-            </f7-link>
-        </f7-nav-left>
-        <f7-nav-center v-if="isNewSlide">New slide </f7-nav-center>
-        <f7-nav-center v-else>Edit slide</f7-nav-center>
-        <f7-nav-right>
-            <f7-link class="close-popup">
-                <f7-icon f7="check_round" size="35px" color="#c0392b"></f7-icon>
-            </f7-link>
-        </f7-nav-right>
-    </f7-navbar>
-
+    </div>
     <!-- <div form class="slide_title">
         <input type="text" placeholder="Title" v-model="slide.title" />
     </div>

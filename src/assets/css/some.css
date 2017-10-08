@@ -104,3 +104,7 @@
 .list-block textarea {
     height: 70px;
 }
+
+.popup-newslide {
+    opacity: .7;
+}

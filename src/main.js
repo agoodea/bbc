@@ -40,11 +40,15 @@ Vue.use(Vuex)
 
 import userModule from "./assets/services/store/user.module"
 import tempModule from "./assets/services/store/temp.module"
+import dataModule from "./assets/services/store/data.module"
+import actionModule from "./assets/services/store/action.module"
 
 const store = new Vuex.Store({
     modules: {
         userModule,
         tempModule,
+        dataModule,
+        actionModule,
     }
 })
 
@@ -182,7 +186,21 @@ mixins.manageFirebase = {
 let useMixins = Object.keys(mixins).map(mixin => mixins[mixin])
 
 // var bus = new Vue();
+document.addEventListener("deviceready", onDeviceReady, false);
 
+function onDeviceReady() {
+    let imgPath = cordova.file.externalDataDirectory + "images/" || "";
+    let recordPath = cordova.file.externalDataDirectory + "record/" || "";
+    let slidePath = cordova.file.externalDataDirectory + "slides/" || "";
+    let albumsPath = cordova.file.externalDataDirectory + "albums/" || "";
+    let path = {
+        imgPath,
+        recordPath,
+        slidePath,
+        albumsPath,
+    };
+    store.commit("setPath", path);
+}
 
 import VueLogger from 'vuejs-logger'
 
@@ -195,7 +213,9 @@ const options = {
 }
 
 Vue.use(VueLogger, options);
-// Vue.use(firebase);
+
+var bus = new Vue({})
+    // Vue.use(firebase);
 
 // import authService from './services/auth.service.js'
 // Init App
@@ -208,6 +228,9 @@ let vm = new Vue({
     // data: data,
     mixins: useMixins,
     store,
+    data: {
+        bus: bus,
+    },
     // Init Framework7 by passing parameters here
     framework7: {
         root: '#app',
