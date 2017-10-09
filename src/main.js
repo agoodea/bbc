@@ -78,110 +78,142 @@ var config = {
 };
 
 let mixins = {}
-
-
-mixins.manageFirebase = {
-    // Set initial values
-    data: {
-        user: null,
-        db: null,
-        store: null,
-        timestamp: null
-    },
-    // Init Firebase
-    created: function() {
-        // Use Firebase
-
-        // Include scripts
-        let firebase = require('firebase/app')
-        require('firebase/auth')
-        require('firebase/database')
-        require('firebase/storage')
-            // Initialize Firebase
-        window.firebase = firebase.initializeApp(config);
-        // Use auth service
-
-        // Get initial user data from local storage
-        this.user = window.localStorage.user ? JSON.parse(window.localStorage.user) : null
-            // Clean local storage if user is not logged in initially
-        if (!window.localStorage.user) this.cleanLocalStorageAfterLogut()
-            // Monitor user changes
-        firebase.auth().onAuthStateChanged(user => {
-            this.user = user ? {
-                uid: user.uid,
-                email: user.email,
-                name: user.displayName,
-                photo: user.photoURL
-            } : null;
-            this.$store.commit('inAuth', this.user);
-        })
-
-        // Use database service
-        this.db = function(path) {
-                return firebase.database().ref(path)
+mixins.manageGlobalDataObject = {
+        // Set initial data
+        data: {
+            data: {},
+        },
+        // Methods to add or remove data
+        methods: {
+            saveData: function(path, value) {
+                // Clone current data
+                let data = JSON.parse(JSON.stringify(this.data))
+                    // Add value to path
+                data = set(data, path, value)
+                    // Update root data object
+                this.$set(this, 'data', data)
+                    // Update local storage
+                window.localStorage.data = JSON.stringify(this.data)
+            },
+            removeData: function(path) {
+                // Clone current data
+                let data = JSON.parse(JSON.stringify(this.data))
+                    // Remove path
+                unset(data, path)
+                    // Update root data object
+                this.$set(this, 'data', data)
+                    // Update local storage
+                window.localStorage.data = JSON.stringify(this.data)
             }
-            // this.timestamp = firebase.database.ServerValue.TIMESTAMP
-
-        // Use storage service
-        this.store = function(path) {
-            return firebase.storage().ref(path)
-        }
-
-
-    },
-    // Watch for changes
-    watch: {
-        user: function(newUser) {
-            // Update local storage
-            if (newUser === null) {
-                window.localStorage.removeItem('user')
-                this.cleanLocalStorageAfterLogut()
-            } else {
-                window.localStorage.user = JSON.stringify(newUser)
-            }
-            // Update window object
-            window.user = newUser
         },
-        db: function(newDB) {
-            // Update window object
-            window.db = newDB
-        },
-        store: function(newStore) {
-            // Update window object
-            window.store = newStore
-        },
-        timestamp: function(newTimestamp) {
-            // Update window object
-            window.timestamp = newTimestamp
+        // Restore local storage
+        created: function() {
+            this.data = window.localStorage.data !== undefined ? JSON.parse(window.localStorage.data) : {}
         }
     },
-    methods: {
-        cleanLocalStorageAfterLogut: function() {
-            for (let item in window.localStorage) {
-                // History
-                if (/^urls\|([0-9a-zA-Z._-]+)$/.test(item)) {
-                    let urls = JSON.parse(window.localStorage[item])
-                    let newUrls = []
-                    let loginRequired = false
-                    urls.map((url) => {
+
+    mixins.manageFirebase = {
+        // Set initial values
+        data: {
+            user: null,
+            db: null,
+            store: null,
+            timestamp: null
+        },
+        // Init Firebase
+        created: function() {
+            // Use Firebase
+
+            // Include scripts
+            let firebase = require('firebase/app')
+            require('firebase/auth')
+            require('firebase/database')
+            require('firebase/storage')
+                // Initialize Firebase
+            window.firebase = firebase.initializeApp(config);
+            // Use auth service
+
+            // Get initial user data from local storage
+            this.user = window.localStorage.user ? JSON.parse(window.localStorage.user) : null
+                // Clean local storage if user is not logged in initially
+            if (!window.localStorage.user) this.cleanLocalStorageAfterLogut()
+                // Monitor user changes
+            firebase.auth().onAuthStateChanged(user => {
+                this.user = user ? {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName,
+                    photo: user.photoURL
+                } : null;
+                this.$store.commit('inAuth', this.user);
+            })
+
+            // Use database service
+            this.db = function(path) {
+                    return firebase.database().ref(path)
+                }
+                // this.timestamp = firebase.database.ServerValue.TIMESTAMP
+
+            // Use storage service
+            this.store = function(path) {
+                return firebase.storage().ref(path)
+            }
+
+
+        },
+        // Watch for changes
+        watch: {
+            user: function(newUser) {
+                // Update local storage
+                if (newUser === null) {
+                    window.localStorage.removeItem('user')
+                    this.cleanLocalStorageAfterLogut()
+                } else {
+                    window.localStorage.user = JSON.stringify(newUser)
+                }
+                // Update window object
+                window.user = newUser
+            },
+            db: function(newDB) {
+                // Update window object
+                window.db = newDB
+            },
+            store: function(newStore) {
+                // Update window object
+                window.store = newStore
+            },
+            timestamp: function(newTimestamp) {
+                // Update window object
+                window.timestamp = newTimestamp
+            }
+        },
+        methods: {
+            cleanLocalStorageAfterLogut: function() {
+                for (let item in window.localStorage) {
+                    // History
+                    if (/^urls\|([0-9a-zA-Z._-]+)$/.test(item)) {
+                        let urls = JSON.parse(window.localStorage[item])
+                        let newUrls = []
+                        let loginRequired = false
+                        urls.map((url) => {
+                            if (this.urlRequiresLogin(url)) {
+                                loginRequired = true
+                            } else if (!loginRequired) {
+                                newUrls.push(url)
+                            }
+                        })
+                        window.localStorage[item] = JSON.stringify(newUrls)
+                            // Component data and scroll positions
+                    } else if (/(scroll|data)\|[0-9a-zA-Z._-]+\|(.+)$/.test(item)) {
+                        let url = item.match(/(scroll|data)\|[0-9a-zA-Z._-]+\|(.+)$/)[2]
                         if (this.urlRequiresLogin(url)) {
-                            loginRequired = true
-                        } else if (!loginRequired) {
-                            newUrls.push(url)
+                            window.localStorage.removeItem(item)
                         }
-                    })
-                    window.localStorage[item] = JSON.stringify(newUrls)
-                        // Component data and scroll positions
-                } else if (/(scroll|data)\|[0-9a-zA-Z._-]+\|(.+)$/.test(item)) {
-                    let url = item.match(/(scroll|data)\|[0-9a-zA-Z._-]+\|(.+)$/)[2]
-                    if (this.urlRequiresLogin(url)) {
-                        window.localStorage.removeItem(item)
                     }
                 }
             }
         }
     }
-}
 
 let useMixins = Object.keys(mixins).map(mixin => mixins[mixin])
 
@@ -201,6 +233,9 @@ function onDeviceReady() {
     };
     store.commit("setPath", path);
 }
+const RecordRTC = require('recordrtc');
+Vue.use(RecordRTC);
+window.RecordRTC = RecordRTC;
 
 import VueLogger from 'vuejs-logger'
 
@@ -228,6 +263,7 @@ let vm = new Vue({
     // data: data,
     mixins: useMixins,
     store,
+    RecordRTC,
     data: {
         bus: bus,
     },

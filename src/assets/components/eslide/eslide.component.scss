@@ -12,6 +12,17 @@
         }
         .content {
             padding: 4px;
+            position: relative;
+            #btnPlay {
+                display: none;
+            }
+            #playText {
+                font-size: large;
+                left: 20%;
+                bottom: 5%;
+                position: absolute;
+                display: none;
+            }
             img {
                 border-radius: 6px;
                 width: auto;
@@ -20,6 +31,13 @@
                 max-width: calc( 100% - 20px);
             }
             canvas {
+                border-radius: 6px;
+                width: auto;
+                max-height: 300px;
+                margin: 0px;
+                max-width: calc( 100% - 12px);
+            }
+            video {
                 border-radius: 6px;
                 width: auto;
                 max-height: 300px;

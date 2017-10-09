@@ -19,7 +19,11 @@ export default {
                 this.$store.commit("setActionState", "slide_camera");
             }
 
-        }
+        },
+        toRecord() {
+            this.$store.commit("setActionState", "slide_record");
+            this.$root.$emit('getRecord', { s: "audio" });
+        },
     },
     computed: {
         actionState() {

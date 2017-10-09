@@ -43,8 +43,8 @@
 			<f7-view id="user" class="tab">
 				<!-- <nav-bar v-bind:is-au="isAu" fixed></nav-bar> -->
 				<f7-pages>
-					<f7-page v-if="isAu" class="album-container">
-						{{actionState}}
+					<f7-page >
+						<f7-link class="open-login-screen">user</f7-link>
 						<!-- <slider :editalbum="editalbum"></slider> -->
 						this is record view
 					</f7-page>

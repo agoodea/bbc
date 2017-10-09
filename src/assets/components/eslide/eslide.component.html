@@ -16,11 +16,15 @@
             </f7-nav-right> -->
         </f7-navbar>
         <div class="header"><input type="text" placeholder="Slide name" class=""></div>
-        <div class="content">
+
+        <div class="content" id="content">
             <canvas id="slideimg"></canvas>
+            <btn-play></btn-play><span id="playText">5.0</span>
+            <!-- <video></video> -->
+
             <!-- <img :src="slide.imgData" class="lazy slide-img" id="myImage" style="display: block"> -->
         </div>
-
+        <h1></h1>
     </div>
     <!-- <div form class="slide_title">
         <input type="text" placeholder="Title" v-model="slide.title" />

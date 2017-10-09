@@ -22,10 +22,13 @@
 <a href="#" class="action-button floating-button color-blue" @click="toEditSlide" v-else-if="isEdit && actionState === 'user'">
     <i class="f7-icons">compose</i>
 </a>
-<a href="#" class="action-button floating-button color-blue" data-popup=".popup-newslide" v-else-if="actionState === 'slide_camera'">
+<a href="#" class="action-button floating-button color-blue" @click="toRecord" v-else-if="actionState === 'slide_camera'">
     <i class="f7-icons">mic</i>
 </a>
-<a href="#" class="action-button floating-button color-blue" data-popup=".popup-newslide" v-else-if="actionState === 'slide_check'">
+<a href="#" class="action-button floating-button color-blue" @click="toRecord" disabled="false" v-else-if="actionState === 'slide_record'">
+    <span id="micText"></span>
+</a>
+<a href="#" class="action-button floating-button color-blue" @click="saveSlide" v-else-if="actionState === 'slide_check'">
     <i class="f7-icons">check</i>
 </a>
 <a href="#" class="action-button floating-button color-blue open-popup" data-popup=".popup-newslide" v-else>
