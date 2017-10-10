@@ -7,7 +7,7 @@ function setOptions(srcType) {
         mediaType: Camera.MediaType.PICTURE,
         allowEdit: false,
         correctOrientation: true,
-        saveToPhotoAlbum: true,
+        saveToPhotoAlbum: false,
         // PictureSourceType: 0,
         //  targetWidth: 300,
         //  targetHeight: 400,
@@ -81,19 +81,10 @@ export default {
             // image.src = src;
             // image1.src = src;
             this.slide.imgData = src;
-
             let canvas = document.getElementById("slideimg");
-            alert("canvas");
-            alert(canvas);
-            try {
-                let canvasStream = canvas.captureStream();
-                alert(canvasStream)
-            } catch (error) {
-                alert(error);
-            }
             let context = canvas.getContext("2d");
             let img = new Image();
-
+            console.log("new Image()");
             // Привязываем функцию к событию onload
             // Это указывает браузеру, что делать, когда изображение загружено
             img.onload = function() {
@@ -102,14 +93,54 @@ export default {
                 let width_ = img.naturalWidth;
                 canvas.width = width_;
                 canvas.height = height_;
+                alert("onload 3");
                 context.drawImage(img, 0, 0);
-                try {
-                    let canvasStream1 = canvas.captureStream();
-                    alert(canvasStream1)
-                } catch (error) {
-                    alert(error);
-                }
-                this.intervalCanvas = setInterval(function() { context.drawImage(img, 0, 0); }, 1000);
+                alert("onload 2");
+                var encoder = new Whammy.Video(10);
+                let intervalCanvas = setInterval(function() {
+                    context.drawImage(img, 0, 0);
+                    encoder.add(canvas);
+                }, 100);
+
+
+
+
+                setTimeout(function() {
+                    clearTimeout(this.intervalCanvas);
+                    // stop = true;
+                    console.log("clearTimeout");
+                    alert("clearTimeout");
+                    try {
+                        alert("encoder 222");
+                        encoder.compile(true, function(outout) {
+                            alert("encoder 1");
+                            var binaryData = [];
+                            binaryData.push(outout);
+                            var url = window.URL.createObjectURL(new Blob(outout, { type: "video/webm" }))
+                            alert(url);
+                            // var url = window.URL.createObjectURL(outout);
+                            let video = document.createElement("video");
+                            let btnPlay = document.getElementById("btnPlay");
+                            video.src = url;
+                            video.id = "videoSlide";
+                            canvas.style.display = "none";
+                            video.autoplay = true;
+                            video.loop = true;
+                            video.controls = true;
+                            video.style.borderRadius = "6px";
+                            let content = document.getElementById("content");
+                            content.insertBefore(video, btnPlay);
+                            btnPlay.style.display = "block";
+                            document.getElementById("playText").style.display = "block";
+                            alert("encoder 2");
+                        });
+                    } catch (error) {
+                        alert("encoder error");
+                        alert(error)
+                    }
+
+
+                }, 2000);
 
             };
             img.src = src;
@@ -122,19 +153,25 @@ export default {
             let canvas = document.getElementById('slideimg');
             let context = canvas.getContext("2d");
             // canvas.capturestream.enabled = true;
-            let canvasStream = canvas.captureStream();
+            // let canvasStream = canvas.captureStream();
             let finalStream = new MediaStream();
             alert("888888");
             audioStream.getAudioTracks().forEach(function(track) {
                 finalStream.addTrack(track);
             });
             alert("99999");
-            canvasStream.getVideoTracks().forEach(function(track) {
-                finalStream.addTrack(track);
-            });
+            try {
+                finalStream.addTrack(canvas);
+            } catch (error) {
+                alert(error);
+            }
+
+            // canvasStream.getVideoTracks().forEach(function(track) {
+            //     finalStream.addTrack(track);
+            // });
             let recorder = RecordRTC(finalStream, {
                 type: 'video',
-                mimeType: 'video/mp4',
+                mimeType: 'video/webm',
             });
             alert("666666");
             recorder.startRecording();

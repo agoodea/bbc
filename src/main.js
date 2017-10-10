@@ -237,6 +237,12 @@ const RecordRTC = require('recordrtc');
 Vue.use(RecordRTC);
 window.RecordRTC = RecordRTC;
 
+
+require('./assets/js/whammy');
+const Whammy = window.Whammy;
+Vue.use(Whammy);
+
+
 import VueLogger from 'vuejs-logger'
 
 const options = {
